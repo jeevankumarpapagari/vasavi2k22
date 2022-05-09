@@ -1,92 +1,35 @@
-//DSOE 6D: Bracket Sequence Validation
-/*
-Input Format
-
-First line an integer N
-Next N lines each line contain single string that denotes the bracket sequence
-Constraints
-
-Input string should contain the (,),[,],{ and } brackets
-
-Output Format
-
-Print “Valid” or “Invalid” in N lines according to the problem statement
-
-Sample Input 0
-
-3
-{[()]}[()]({})
-{[(])} 
-{{[[(())]]}} 
-Sample Output 0
-
-Valid
-Invalid
-Valid
-*/
-
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
 #include <stdlib.h>
-char s[100];
-int top=-1;
-void push(char x)
-{
-    top++;
-    s[top]=x;
-}
-void pop()
-{
-    top--;
-}
-int main() 
-{
 
-    int t;
-    scanf("%d",&t);
-    while(t--)
+int main()
+{
+    int n;
+    scanf("%d",&n);
+    while(n--)
     {
-        char str[100];
-        scanf("%s",str);
-        int i=0,f=0;
-        while(str[i])
+        char exp[100], stack[100];
+        int top = -1;
+        scanf("%s",exp);
+        int i = -1, flag = 1;
+        while(exp[++i])
         {
-            if((str[i]==']' || str[i]=='}' || str[i]==')') && top==-1)
+            if(exp[i] == '(' || exp[i] == '{' || exp[i] == '[')
+                stack[++top] = exp[i];
+            else if((exp[i]==')' && stack[top]=='(') || (exp[i]==']' && stack[top]=='[') || (exp[i]=='}' && stack[top]=='{'))
+                top--;
+            else
             {
                 printf("Invalid\n");
-                f=1;
+                flag = 0;
                 break;
             }
-            else if(str[i]=='[' || str[i]=='{' || str[i]=='(' )
-            {
-                push(str[i]);
-            }
-            else if(str[i]==']' && s[top]=='[' )
-                pop();
-            else if(str[i]=='}' && s[top]=='{')
-                pop();
-            else if( str[i]==')' && s[top]=='(') 
-                pop();
-            else 
-            {
-                printf("Invalid\n");
-                f=1;
-                break;
-            }
-            i++;
         }
-        if(top==-1 && str[i]=='\0')
+        if(exp[i] == '\0' && top==-1)
             printf("Valid\n");
-        else if(f==0)
+        else if(flag)
             printf("Invalid\n");
-        else 
-        {
-            
-        }
-        top=-1;
     }
     return 0;
 }
-
-
