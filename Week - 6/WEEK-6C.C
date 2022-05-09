@@ -1,47 +1,41 @@
-//Postfix Expression Evaluation
 #include <stdio.h>
-#include <string.h>
-#include <math.h>
-#include <stdlib.h>
-int stack[100],top=-1;
-void push(int x)
+#include <ctype.h>
+
+int stack[50], top = -1;
+
+void push(int ele)
 {
-    top++;
-    stack[top]=x;
+    stack[++top] = ele;
 }
+
 int pop()
 {
-    int x=stack[top];
-    top--;
-    return x;
+    return stack[top--];
 }
+
 int main()
 {
-    char str[100];
-    scanf("%s",str);
-    int i=0;
-    while(str[i])
+    char exp[100];
+    scanf("%s",exp);
+
+    int i = -1;
+    while(exp[++i])
     {
-        if(str[i]>='0' && str[i]<='9')
-            push(str[i]-48);
-        else 
+        if(isdigit(exp[i]))
+            push(exp[i]-'0');
+        else
         {
-            int x=pop();
-            int y=pop();
-            if(str[i]=='+')
-                push(x+y);
-            else if(str[i]=='-')
-                push(y-x);
-            else if(str[i]=='/')
-                push(y/x);
-            else if(str[i]=='*')
-                push(y*x);
-            else 
-                push(y%x);
+            int y = pop();
+            int x = pop();
+            switch(exp[i])
+            {
+                case '+': push(x+y); break;
+                case '-': push(x-y); break;
+                case '*': push(x*y); break;
+                case '/': push(x/y); break;
+            }
         }
-        i++;
     }
     printf("%d",stack[top]);
     return 0;
 }
-
