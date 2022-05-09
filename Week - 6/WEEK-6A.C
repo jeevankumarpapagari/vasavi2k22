@@ -1,103 +1,51 @@
-//DSOE 6A: Queue using dynamic array
-/*
-Input Format
-
-First line an integer N
-Next N lines each line contain one operation each:1 X denotes insert X value to queue, 2 denotes delete the first element,3 denotes print first element, 4 denotes print last element,5 denotes check the queue is empty or not.
-
-Output Format
-
-If you are unable to delete an element from the queue print “invalid”
-
-Sample Input 0
-
-9
-5
-1 10
-1 20
-1 30
-3
-5
-4
-2
-3
-Sample Output 0
-
-1
-10
-0
-30
-20
-*/
-
 #include <stdio.h>
-#include <string.h>
-#include <math.h>
+#include <stdbool.h>
 #include <stdlib.h>
-int f=-1,r=-1;
-int *q;
-void isempty()
+
+int *queue, front = 0, rear = -1;
+
+void enQueue()
 {
-    if(f==-1)
-        printf("1\n");
-    else 
-        printf("0\n");
-}
-void enq(int x)
-{
-    if(f==-1)
-        f=r=0;
-    else 
-        r++;
-    q[r]=x;
-}
-void deq()
-{
-    if(f==-1)
-        printf("invalid\n");
-    else if(f==r)
-        f=r=-1;
-    else 
-        f++;
-}
-void front()
-{
-    if(f==-1)
-        printf("invalid\n");
-    else 
-        printf("%d\n",q[f]);
-}
-void rear()
-{
-    if(f==-1)
-        printf("invalid\n");
-    else 
-        printf("%d\n",q[r]);
+    scanf("%d",&queue[++rear]);
 }
 
-int main() 
+void deQueue()
 {
-    q=(int*)malloc(sizeof(int)*100);
-    int t,ch,x;
-    scanf("%d",&t);
-    while(t--)
+    if(front > rear)
+        printf("invalid\n");
+    else
     {
-        scanf("%d",&ch);
-        if(ch==1)
+        front++;
+        if(front > rear)
         {
-           scanf("%d",&x);
-            enq(x);
+            front = 0;
+            rear = -1;
         }
-        else if(ch==2)
-            deq();
-        else if(ch==3)
-            front();
-        else if(ch==4)
-            rear();
-        else 
-            isempty();
     }
-   
+}
+
+bool isEmpty()
+{
+    return front>rear;
+}
+
+int main()
+{
+    queue = (int*) malloc(100 * sizeof(int));
+    int n;
+    scanf("%d",&n);
+    while(n--)
+    {
+        int choice;
+        scanf("%d",&choice);
+        switch(choice)
+        {
+            case 1: enQueue(); break;
+            case 2: deQueue(); break;
+            case 3: isEmpty() ? printf("invalid\n") : printf("%d\n",queue[front]); break;
+            case 4: isEmpty() ? printf("invalid\n") : printf("%d\n",queue[rear]); break;
+            case 5: isEmpty() ? printf("1\n") : printf("0\n"); break;
+        }
+    }
     return 0;
 }
-
