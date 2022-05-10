@@ -20,20 +20,20 @@
 		1. Using an Array
 		2. Using a Linked list
 */
-#include<stdio.h>
-#include<stdbool.h>
-#define SIZE 100
+
+//Target: Every operation should be done with O(1)
+#define SIZE 10
 int queue[SIZE], front = 0, rear = -1;
 
 void enQueue(int ele)
 {
-	if(rear == SIZE-1)      printf("Queue is Full");
+	if(rear == SIZE-1)      printf("Queue is full");
 	else                    queue[++rear] = ele;
 }
 
 void deQueue()
 {
-	if(front > rear)        printf("Queue is empty");
+	if(front > rear)        printf("Queue is Empty");
 	else
 	{
 		front++;
@@ -45,50 +45,38 @@ void deQueue()
 	}
 }
 
-void rearValue()
-{
-	if(front > rear)    printf("Queue is empty");
-	else                printf("Rear Value is: %d",queue[rear]);
-}
-
-void frontValue()
-{
-	if(front > rear)    printf("Queue is empty");
-	else                printf("Front Value is: %d",queue[front);
-}
-
-void isEmpty()
-{
-	front > rear ? printf("Yes") : printf("No");
-}
-
-void isFull()
-{
-	rear == SIZE-1 ? printf("Yes") : printf("No");
-}
-
 int size()
 {
-	return (rear-front)+1;
+	return rear-front+1;
+}
+
+bool isEmpty()
+{
+	return front>rear ? true : false;
+}
+
+bool isFull()
+{
+	return rear == SIZE-1;
+}
+
+void frontElement()
+{
+	isEmpty() ? printf("Queue is empty") : printf("%d",queue[front]);
+}
+
+void rearElement()
+{
+	isEmpty() ? printf("Queue is empty") : printf("%d",queue[rear]);
 }
 
 int main()
 {
-	enQueue(100);
-	enQueue(200);
-	enQueue(150);
-	enQueue(250);
+	enQueue(147);
+	enQueue(10);
+	enQueue(52);enQueue(98);enQueue(45);
+	enQueue(96);enQueue(9);enQueue(12);
 	deQueue();
-	rearValue();
+	printf("Total elements are: %d",size());
+	printf("Is Queue is empty? %d",isEmpty());
 }
-
-
-
-
-
-
-
-
-
-
-
