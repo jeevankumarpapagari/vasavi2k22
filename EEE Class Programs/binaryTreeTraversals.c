@@ -59,6 +59,8 @@ int levelCount(BTN *root)
 
 void printCurrentLevelData(BTN *root,int level)
 {
+	if(root == NULL)
+		return;
 	if(level == 1)
 		printf("%c ",root->data);
 	else
